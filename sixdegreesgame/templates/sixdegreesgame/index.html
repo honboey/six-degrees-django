@@ -2,7 +2,10 @@
 
 {% block main %}
   <main>
-    <form action=""></form>
-    {{ results }}
+    <ul>
+      {% for rapper in random_rappers %}
+        <li>{{ rapper }}</li>
+      {% endfor %}
+    </ul>
   </main>
 {% endblock main %}
