@@ -3,10 +3,10 @@
 {% block main %}
   <main>
     <ul>
-      <li>{{ rapper_1 }}</li>
-      <img src="{{ rapper_1_image }}" alt="">
-      <li>{{ rapper_2 }}</li>
-      <img src="{{ rapper_2_image }}" alt="">
+      <li>{{ rapper_1.name }}</li>
+      <img src="{{ rapper_1.image.url }}" alt="">
+      <li>{{ rapper_2.name }}</li>
+      <img src="{{ rapper_2.image.url }}" alt="">
     </ul>
   </main>
 {% endblock main %}
