@@ -10,13 +10,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# Spotify credentials
+# Spotify calls
 
 client_id = os.getenv("CLIENT_ID")
 client_secret = os.getenv("CLIENT_SECRET")
 
 client_credentials_manager = SpotifyClientCredentials(client_id, client_secret)
 spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
+
+
+def get_artist_image(str):
+    artist_results = spotify.search(q="artist:" + str, type="artist")
+    artist_details = artist_results["artists"]["items"]
+    if len(artist_details) > 0:
+        return artist_details[0]["images"][0]["url"]
 
 
 # Views
@@ -31,11 +38,14 @@ def index(request):
     two_random_rappers = random.sample(rappers, 2)
     rapper_1 = two_random_rappers[0]
     rapper_2 = two_random_rappers[1]
-    rapper_1_image = spotipy.search(q="artist:" + rapper_1, type="artist")
+    rapper_1_image = get_artist_image(rapper_1)
+    rapper_2_image = get_artist_image(rapper_2)
 
     context = {
         "rapper_1": rapper_1,
         "rapper_2": rapper_2,
+        "rapper_1_image": rapper_1_image,
+        "rapper_2_image": rapper_2_image,
     }
     return render(request, "sixdegreesgame/index.html", context)
 
