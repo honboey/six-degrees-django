@@ -15,7 +15,7 @@ class Song(models.Model):
         ...
 
     def matches_final_artist(self):
-        ... 
-    
+        ...
+
     def __str__(self):
         return f"{self.name}, {self.artists}"
