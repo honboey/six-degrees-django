@@ -31,6 +31,7 @@ def index(request):
     two_random_rappers = random.sample(rappers, 2)
     rapper_1 = two_random_rappers[0]
     rapper_2 = two_random_rappers[1]
+    rapper_1_image = spotipy.search(q="artist:" + rapper_1, type="artist")
 
     context = {
         "rapper_1": rapper_1,
