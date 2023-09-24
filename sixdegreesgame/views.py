@@ -28,9 +28,14 @@ def index(request):
         rappers = json.load(rappers_file)
 
     # Choose two out of the list
-    random_rappers = random.sample(rappers, 2)
+    two_random_rappers = random.sample(rappers, 2)
+    rapper_1 = two_random_rappers[0]
+    rapper_2 = two_random_rappers[1]
 
-    context = {"random_rappers": random_rappers}
+    context = {
+        "rapper_1": rapper_1,
+        "rapper_2": rapper_2,
+    }
     return render(request, "sixdegreesgame/index.html", context)
 
 
