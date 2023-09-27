@@ -21,8 +21,10 @@ client_credentials_manager = SpotifyClientCredentials(client_id, client_secret)
 spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
-# _ -> Dict, Dict
 def initialise_rappers():
+    """
+    Grab two random rappers from a list and create a dict for each rapper. Put these dicts in a tuple.
+    """
     # List of rappers to choose from
     with open("sixdegreesgame/data/rappers.json", "r") as rappers_file:
         rappers = json.load(rappers_file)
@@ -40,7 +42,11 @@ def initialise_rappers():
     )
 
 
+# Str -> Dict
 def get_rapper_image(str):
+    """
+    When given an artist name, search the Spotify API and return an image dict for the artist
+    """
     rapper_results = spotify.search(q="artist:" + str, type="artist")
     rapper_details = rapper_results["artists"]["items"]
     if len(rapper_details) > 0:
