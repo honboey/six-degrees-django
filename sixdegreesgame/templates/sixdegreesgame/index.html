@@ -2,11 +2,15 @@
 
 {% block main %}
   <main>
-    <ul>
-      <li>{{ rapper_1.name }}</li>
-      <img src="{{ rapper_1.image.url }}" alt="">
-      <li>{{ rapper_2.name }}</li>
-      <img src="{{ rapper_2.image.url }}" alt="">
+    <ul class="rappers__list">
+      <li>
+        {{ rapper_1.name }}
+        <img src="{{ rapper_1.image.url }}" alt="" class="rappers__image">
+      </li>
+      <li>
+        {{ rapper_2.name }}
+        <img src="{{ rapper_2.image.url }}" alt="" class="rappers__image">
+      </li>
     </ul>
   </main>
 {% endblock main %}
