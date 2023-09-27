@@ -21,27 +21,38 @@ client_credentials_manager = SpotifyClientCredentials(client_id, client_secret)
 spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
 
-def get_artist_image(str):
-    artist_results = spotify.search(q="artist:" + str, type="artist")
-    artist_details = artist_results["artists"]["items"]
-    if len(artist_details) > 0:
-        return artist_details[0]["images"][0]
 
+# _ -> Dict, Dict
+def initialise_rappers():
+    # List of rappers to choose from
+    with open("sixdegreesgame/data/rappers.json", "r") as rappers_file:
+        rappers = json.load(rappers_file)
+        
+    two_random_rappers = random.sample(rappers, 2)
+    return (
+        {
+            "name": two_random_rappers[0],
+            "image": get_rapper_image(two_random_rappers[0])
+        },
+        {
+            "name": two_random_rappers[1],
+            "image": get_rapper_image(two_random_rappers[1])
+        },
+    )
+
+
+def get_rapper_image(str):
+    rapper_results = spotify.search(q="artist:" + str, type="artist")
+    rapper_details = rapper_results["artists"]["items"]
+    if len(rapper_details) > 0:
+        return rapper_details[0]["images"][0]
 
 # Views
 
 
 def index(request):
-    # List of rappers to choose from
-    with open("sixdegreesgame/data/rappers.json", "r") as rappers_file:
-        rappers = json.load(rappers_file)
 
-    # Choose two out of the list
-    two_random_rappers = random.sample(rappers, 2)
-    rapper_1 = two_random_rappers[0]
-    rapper_2 = two_random_rappers[1]
-    rapper_1_image = get_artist_image(rapper_1)
-    rapper_2_image = get_artist_image(rapper_2)
+    rappers = initialise_rappers()
 
     song_1 = Song(name="Song name") 
     if request.method == "POST":
@@ -53,14 +64,8 @@ def index(request):
     
 
     context = {
-        "rapper_1": {
-            "name": rapper_1,
-            "image": rapper_1_image,
-        },
-        "rapper_2": {
-            "name": rapper_2,
-            "image": rapper_2_image,
-        },
+        "rapper_1": rappers[0],
+        "rapper_2": rappers[1],
         "song_1": song_1,
     }
     return render(request, "sixdegreesgame/index.html", context)
