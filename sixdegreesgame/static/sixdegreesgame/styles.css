@@ -9,3 +9,12 @@
   aspect-ratio: 1/1;
   object-fit: cover;
 }
+
+.song-form label {
+  display: block;
+}
+
+.song-form + .song-form {
+  margin-top: 1rem;
+}
+

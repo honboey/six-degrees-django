@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
 
+from .models import Song
+
 load_dotenv()
 
 # Spotify calls
@@ -41,6 +43,15 @@ def index(request):
     rapper_1_image = get_artist_image(rapper_1)
     rapper_2_image = get_artist_image(rapper_2)
 
+    song_1 = Song(name="Song name") 
+    if request.method == "POST":
+        print(request.POST)
+        if request.POST.get("form-id") == "song-1":
+            song_1 = Song(
+                name=request.POST.get("song-1")
+                )
+    
+
     context = {
         "rapper_1": {
             "name": rapper_1,
@@ -50,6 +61,7 @@ def index(request):
             "name": rapper_2,
             "image": rapper_2_image,
         },
+        "song_1": song_1,
     }
     return render(request, "sixdegreesgame/index.html", context)
 
