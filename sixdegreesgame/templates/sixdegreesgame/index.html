@@ -43,5 +43,10 @@
       <label for="">Song 7</label>
       <input type="text">
     </form>
+    <form action="{% url 'sixdegreesgame:index' %}" method="post">
+      {% csrf_token %}
+      <input type="hidden" name="form-id" value="reset">
+      <input type="submit" value="reset">
+    </form>
   </main>
 {% endblock main %}
