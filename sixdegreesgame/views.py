@@ -58,18 +58,20 @@ def get_rapper_image(str):
 
 def index(request):
     rappers = initialise_rappers()
+    rapper_1 = rappers[0]
+    rapper_2 = rappers[1]
 
     song_1 = Song(name="Song name")
     if request.method == "POST":
-        print(request.POST)
         if request.POST.get("form-id") == "song-1":
             song_1 = Song(name=request.POST.get("song-1"))
 
     context = {
-        "rapper_1": rappers[0],
-        "rapper_2": rappers[1],
+        "rapper_1": rapper_1,
+        "rapper_2": rapper_2,
         "song_1": song_1,
     }
+    print(context)
     return render(request, "sixdegreesgame/index.html", context)
 
 

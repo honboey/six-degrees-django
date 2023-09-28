@@ -12,41 +12,46 @@
         <img src="{{ rapper_2.image.url }}" alt="" class="rappers__image">
       </li>
     </ul>
-    <form action="{% url 'sixdegreesgame:index' %}" method="post" class="song-form">
-      {% csrf_token %}
-      <label for="song-1">Song 1</label>
-      <input type="hidden" name="form-id" value="song-1">
-      <input type="text" name="song-1" value="{{ song_1 }}" id="song-1">
-      <input type="submit" value="Submit">
-    </form>
-    <form action="" class="song-form">
-      <label for="">Song 2</label>
-      <input type="text">
-    </form>
-    <form action="" class="song-form">
-      <label for="">Song 3</label>
-      <input type="text">
-    </form>
-    <form action="" class="song-form">
-      <label for="">Song 4</label>
-      <input type="text">
-    </form>
-    <form action="" class="song-form">
-      <label for="">Song 5</label>
-      <input type="text">
-    </form>
-    <form action="" class="song-form">
-      <label for="">Song 6</label>
-      <input type="text">
-    </form>
-    <form action="" class="song-form">
-      <label for="">Song 7</label>
-      <input type="text">
-    </form>
-    <form action="{% url 'sixdegreesgame:index' %}" method="post">
-      {% csrf_token %}
-      <input type="hidden" name="form-id" value="reset">
-      <input type="submit" value="reset">
-    </form>
+    <div class="song-forms">
+      <form
+        hx-post="{% url 'sixdegreesgame:index' %}"
+        hx-target="header"
+        class="song-form">
+        {% csrf_token %}
+        <label for="song-1">Song 1</label>
+        <input type="hidden" name="form-id" value="song-1">
+        <input type="text" name="song-1" value="{{ song_1 }}" id="song-1">
+        <input type="submit" value="Submit">
+      </form>
+      <form action="" class="song-form">
+        <label for="">Song 2</label>
+        <input type="text" id="song-2">
+      </form>
+      <form action="" class="song-form">
+        <label for="">Song 3</label>
+        <input type="text">
+      </form>
+      <form action="" class="song-form">
+        <label for="">Song 4</label>
+        <input type="text">
+      </form>
+      <form action="" class="song-form">
+        <label for="">Song 5</label>
+        <input type="text">
+      </form>
+      <form action="" class="song-form">
+        <label for="">Song 6</label>
+        <input type="text">
+      </form>
+      <form action="" class="song-form">
+        <label for="">Song 7</label>
+        <input type="text">
+      </form>
+      <form action="{% url 'sixdegreesgame:index' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="form-id" value="reset">
+        <input type="submit" value="reset">
+      </form>
+    </div>
   </main>
 {% endblock main %}
