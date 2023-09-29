@@ -15,12 +15,24 @@
     <div class="song-forms">
       <form
         hx-post="{% url 'sixdegreesgame:index' %}"
-        hx-target="header"
+        hx-swap=".song-list"
+        hx-target=".song-list"
         class="song-form">
         {% csrf_token %}
         <label for="song-1">Song 1</label>
         <input type="hidden" name="form-id" value="song-1">
-        <input type="text" name="song-1" value="{{ song_1 }}" id="song-1">
+        <input type="text" name="song-name" value="{{ song_1 }}" id="song-1">
+        <input type="submit" value="Submit">
+      </form>
+      <form
+        hx-post="{% url 'sixdegreesgame:index' %}"
+        hx-swap=".song-list"
+        hx-target=".song-list"
+        class="song-form">
+        {% csrf_token %}
+        <label for="song-2">Song 1</label>
+        <input type="hidden" name="form-id" value="song-2">
+        <input type="text" name="song-name" value="{{ song_2 }}" id="song-2">
         <input type="submit" value="Submit">
       </form>
       <form action="" class="song-form">
@@ -47,11 +59,16 @@
         <label for="">Song 7</label>
         <input type="text">
       </form>
-      <form action="{% url 'sixdegreesgame:index' %}" method="post">
+      <form 
+        hx-post="{% url 'sixdegreesgame:index' %}"  
+        hx-swap=".song-list"
+        hx-target=".song-list"
+        class="song-form">
         {% csrf_token %}
         <input type="hidden" name="form-id" value="reset">
         <input type="submit" value="reset">
       </form>
     </div>
+    {% include "sixdegreesgame/includes/song-list.html" %}
   </main>
 {% endblock main %}

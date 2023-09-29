@@ -2,11 +2,14 @@ import os
 import spotipy
 import json
 import random
+import pprint
 
 from django.shortcuts import render
 from django.http import HttpResponse
 from spotipy.oauth2 import SpotifyClientCredentials
 from dotenv import load_dotenv
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 from .models import Song
 
@@ -20,6 +23,7 @@ client_secret = os.getenv("CLIENT_SECRET")
 client_credentials_manager = SpotifyClientCredentials(client_id, client_secret)
 spotify = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
 
+# Initialise rappers
 
 def initialise_rappers():
     """
@@ -55,23 +59,41 @@ def get_rapper_image(str):
 
 # Views
 
-
 def index(request):
     rappers = initialise_rappers()
     rapper_1 = rappers[0]
     rapper_2 = rappers[1]
-
-    song_1 = Song(name="Song name")
+    song_1 = Song()
+    song_2 = Song()
+    
+    # Handle the form
     if request.method == "POST":
         if request.POST.get("form-id") == "song-1":
-            song_1 = Song(name=request.POST.get("song-1"))
+            song_1 = Song(name=request.POST.get("song-name"))
+        if request.POST.get("form-id") == "song-2":
+            song_2 = Song(name=request.POST.get("song-name"))
+        # Delete all songs when user hits "reset"
+        if request.POST.get("form-id") == "reset":
+            Song.objects.all().delete()
+    
 
     context = {
         "rapper_1": rapper_1,
         "rapper_2": rapper_2,
         "song_1": song_1,
+        "song_2": song_2,
     }
-    print(context)
+
+    # Check if it's an AJAX request (HTMX request)
+    if request.headers.get("HX-Request") == "true":
+        # Render the song list template as a string
+        song_list_html = render_to_string("sixdegreesgame/includes/song-list.html", context, request)
+        pprint.PrettyPrinter(indent=1).pprint(context)
+
+        # Return the updated content as JSON
+        return JsonResponse({"html": song_list_html})
+
+    pprint.PrettyPrinter(indent=1).pprint(context)
     return render(request, "sixdegreesgame/index.html", context)
 
 
